@@ -1,0 +1,26 @@
+# Git
+.git
+.gitignore
+
+# Docker
+docker compose.yml
+docker compose.override.yml
+.env
+
+# Local Workspace (User Data)
+workspace/
+
+# Documentation
+docs/
+README.md
+LICENSE
+
+# OS Specific
+.DS_Store
+Thumbs.db
+
+# Node
+node_modules/
+.npm
+.nvm
+.bun

@@ -1,0 +1,29 @@
+services:
+  workbench:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: workbench:latest
+    container_name: workbench
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      # --- Dynamic Autoinstall Configuration ---
+      - AUTOINSTALL_NPM=${AUTOINSTALL_NPM:-@google/gemini-cli @anthropic-ai/claude-code}
+      - AUTOINSTALL_PIP=${AUTOINSTALL_PIP:-}
+      - AUTOINSTALL_BUN=${AUTOINSTALL_BUN:-}
+      - AUTOINSTALL_APT=${AUTOINSTALL_APT:-}
+
+      # --- Authentication Configuration ---
+      - AUTH_SKIP=${AUTH_SKIP:-false}
+      - AUTH_USERNAME=${AUTH_USERNAME:-admin}
+      - AUTH_PASSWORD=${AUTH_PASSWORD:-admin}
+    volumes:
+      # Persistent project code and configuration (Bind mount)
+      - workspace:/workspace
+    user: superuser
+    working_dir: /workspace
+
+volumes:
+  workspace:

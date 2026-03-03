@@ -1,0 +1,28 @@
+# Docker
+.env
+docker compose.override.yml
+
+# Workbench Workspace (User Data)
+workspace/
+
+# OS Specific
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Node
+node_modules/
+.npm
+.nvm
+.bun
+
+# Zellij & Oh My Zsh (if they bleed out)
+.zellij/
+.oh-my-zsh/
+.zsh_history
+.bash_history

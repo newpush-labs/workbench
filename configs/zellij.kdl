@@ -1,0 +1,38 @@
+// Zellij Configuration for Workbench
+show_release_notes false
+default_layout "compact"
+pane_frames false
+default_mode "normal"
+session_serialization true
+on_force_close "detach"
+mouse_mode false
+copy_on_select false
+copy_clipboard "system"
+
+theme "default"
+
+keybinds {
+    normal {
+        bind "Ctrl p" { SwitchToMode "Pane"; }
+        bind "Ctrl t" { SwitchToMode "Tab"; }
+        bind "Ctrl s" { SwitchToMode "Scroll"; }
+        bind "Ctrl o" { SwitchToMode "Session"; }
+        bind "Ctrl q" { Quit; }
+        
+        unbind "Alt h" "Alt l" "Alt j" "Alt k"
+        unbind "Alt Left" "Alt Right" "Alt Down" "Alt Up"
+    }
+    shared_except "locked" {
+        bind "Ctrl h" { MoveFocusOrTab "Left"; }
+        bind "Ctrl l" { MoveFocusOrTab "Right"; }
+        bind "Ctrl j" { MoveFocus "Down"; }
+        bind "Ctrl k" { MoveFocus "Up"; }
+        bind "Ctrl n" { NewPane; }
+    }
+}
+
+ui {
+    pane_frames {
+        rounded_corners true
+    }
+}

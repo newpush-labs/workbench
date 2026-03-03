@@ -1,0 +1,19 @@
+:8080 {
+    # Basic Auth to protect the whole workspace (admin / admin)
+    basic_auth /* {
+        admin $2a$14$7zTP/VI0XH77PAhVsH5Dyu/rCCraP0PpCLE42Qyz0ozQIZP7TXhIe
+    }
+
+    # Redirect /ide to /ide/
+    redir /ide /ide/
+
+    # Route /ide/ to code-server
+    handle_path /ide/* {
+        reverse_proxy 127.0.0.1:8081
+    }
+
+    # Route everything else to the Zellij terminal
+    handle /* {
+        reverse_proxy 127.0.0.1:8082
+    }
+}
