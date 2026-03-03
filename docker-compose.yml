@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: workbench:latest
+    image: ghcr.io/newpush-labs/workbench:latest
     container_name: workbench
     restart: unless-stopped
     ports:
