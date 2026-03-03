@@ -7,6 +7,28 @@ on:
   pull_request:
     branches:
       - main
+  workflow_dispatch:
+    inputs:
+      ttyd_version:
+        description: 'TTYD Version'
+        required: true
+        default: '1.7.7'
+      zellij_version:
+        description: 'Zellij Version'
+        required: true
+        default: 'v0.43.1'
+      bun_version:
+        description: 'Bun Version'
+        required: true
+        default: 'bun-v1.3.10'
+      code_server_version:
+        description: 'Code-Server Version'
+        required: true
+        default: '4.109.5'
+      nvm_version:
+        description: 'NVM Version'
+        required: true
+        default: 'v0.40.4'
 
 env:
   REGISTRY: ghcr.io
@@ -55,3 +77,9 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          build-args: |
+            TTYD_VERSION=${{ github.event.inputs.ttyd_version || '1.7.7' }}
+            ZELLIJ_VERSION=${{ github.event.inputs.zellij_version || 'v0.43.1' }}
+            BUN_VERSION=${{ github.event.inputs.bun_version || 'bun-v1.3.10' }}
+            CODE_SERVER_VERSION=${{ github.event.inputs.code_server_version || '4.109.5' }}
+            NVM_VERSION=${{ github.event.inputs.nvm_version || 'v0.40.4' }}

@@ -1,11 +1,19 @@
+# Global ARGs for version pinning - these can be overridden via --build-arg
+ARG TTYD_VERSION=1.7.7
+ARG ZELLIJ_VERSION=v0.43.1
+ARG BUN_VERSION=bun-v1.3.10
+ARG CODE_SERVER_VERSION=4.109.5
+ARG NVM_VERSION=v0.40.4
+
 # --- Builder Stage ---
 FROM debian:trixie-slim AS builder
 
 RUN apt-get update && apt-get install -y wget curl unzip tar xz-utils
 
-ARG TTYD_VERSION=1.7.7
-ARG ZELLIJ_VERSION=v0.43.1
-ARG BUN_VERSION=bun-v1.3.10
+# Re-declare global ARGs in this stage to make them available
+ARG TTYD_VERSION
+ARG ZELLIJ_VERSION
+ARG BUN_VERSION
 
 WORKDIR /downloads
 
@@ -30,9 +38,9 @@ FROM debian:trixie-slim
 # Avoid tzdata prompts
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Pin versions for the final stage
-ARG CODE_SERVER_VERSION=4.109.5
-ARG NVM_VERSION=v0.40.4
+# Re-declare global ARGs in this stage
+ARG CODE_SERVER_VERSION
+ARG NVM_VERSION
 
 # Install all apt dependencies in one single RUN command to optimize layers
 RUN apt-get update && apt-get install -y --no-install-recommends \
