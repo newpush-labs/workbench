@@ -14,22 +14,33 @@ RUN apt-get update && apt-get install -y wget curl unzip tar xz-utils
 ARG TTYD_VERSION
 ARG ZELLIJ_VERSION
 ARG BUN_VERSION
+ARG TARGETARCH
 
 WORKDIR /downloads
 
-# Download ttyd
-RUN wget -q https://github.com/tsl0922/ttyd/releases/download/${TTYD_VERSION}/ttyd.x86_64 -O ttyd && \
-    chmod +x ttyd
-
-# Download Zellij
-RUN wget -q https://github.com/zellij-org/zellij/releases/download/${ZELLIJ_VERSION}/zellij-x86_64-unknown-linux-musl.tar.gz && \
-    tar -xzf zellij-x86_64-unknown-linux-musl.tar.gz && \
-    chmod +x zellij
-
-# Download Bun
-RUN wget -q https://github.com/oven-sh/bun/releases/download/${BUN_VERSION}/bun-linux-x64.zip && \
-    unzip bun-linux-x64.zip && \
-    mv bun-linux-x64/bun bun && \
+# Download ttyd, zellij, and bun based on TARGETARCH
+RUN case "${TARGETARCH}" in \
+      "amd64") \
+        TTYD_ARCH="x86_64" && \
+        ZELLIJ_ARCH="x86_64-unknown-linux-musl" && \
+        BUN_ARCH="x64" ;; \
+      "arm64") \
+        TTYD_ARCH="aarch64" && \
+        ZELLIJ_ARCH="aarch64-unknown-linux-musl" && \
+        BUN_ARCH="aarch64" ;; \
+      *) echo "Unsupported architecture: ${TARGETARCH}" && exit 1 ;; \
+    esac && \
+    # Download ttyd
+    wget -q https://github.com/tsl0922/ttyd/releases/download/${TTYD_VERSION}/ttyd.${TTYD_ARCH} -O ttyd && \
+    chmod +x ttyd && \
+    # Download Zellij
+    wget -q https://github.com/zellij-org/zellij/releases/download/${ZELLIJ_VERSION}/zellij-${ZELLIJ_ARCH}.tar.gz && \
+    tar -xzf zellij-${ZELLIJ_ARCH}.tar.gz && \
+    chmod +x zellij && \
+    # Download Bun
+    wget -q https://github.com/oven-sh/bun/releases/download/${BUN_VERSION}/bun-linux-${BUN_ARCH}.zip && \
+    unzip bun-linux-${BUN_ARCH}.zip && \
+    mv bun-linux-${BUN_ARCH}/bun bun && \
     chmod +x bun
 
 # --- Final Stage ---
