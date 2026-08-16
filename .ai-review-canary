@@ -1,0 +1,4 @@
+Temporary canary to verify the merged AI-review caller.
+
+Expected: a comment from `noemi-reviewer-bot[bot]` with three-gate findings.
+Not a carve-out. Safe to close unmerged.
